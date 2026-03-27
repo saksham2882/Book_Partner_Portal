@@ -1,4 +1,4 @@
 package com.cg.Entity;
 
-public class Author {
+public class Authors {
 }
