@@ -9,6 +9,7 @@ public class BookPartnerPortalApplication {
 	// main
 	public static void main(String[] args) {
 		SpringApplication.run(BookPartnerPortalApplication.class, args);
+		// "Branch check"
 	}
 
 }
