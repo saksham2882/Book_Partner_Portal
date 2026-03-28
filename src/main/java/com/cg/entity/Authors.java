@@ -1,4 +1,4 @@
-package com.cg.Entity;
+package com.cg.entity;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.cg.Repository;
+package com.cg.repository;
 
-import com.cg.Entity.Job;
+import com.cg.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

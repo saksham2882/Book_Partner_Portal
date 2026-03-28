@@ -1,4 +1,4 @@
-package com.cg.Entity;
+package com.cg.entity;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Job {
+public class 00Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
