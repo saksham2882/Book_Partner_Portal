@@ -1,6 +1,8 @@
 package com.cg.controller;
 
 
+import com.cg.dto.AuthorRoyaltyDTO;
+import com.cg.dto.BestSellingBookDTO;
 import com.cg.service.IAuthorService;
 import com.cg.dto.AuthorBookPublisherDto;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +24,18 @@ public class AuthorApiController {
     @GetMapping("/books-with-publishers")
     public ResponseEntity<List<AuthorBookPublisherDto>> getBooksWithPublishers() {
         return ResponseEntity.ok(authorService.getAuthorsWithBooksAndPublishers());
+    }
+
+    // API #5
+    @GetMapping("/best-selling-books")
+    public List<BestSellingBookDTO> getBestSellingBooks() {
+        return authorService.getBestSellingBooks();
+    }
+
+
+    // API #6
+    @GetMapping("/with-royalty-range")
+    public List<AuthorRoyaltyDTO> getAuthorsWithRoyaltyRange() {
+        return authorService.getAuthorsWithRoyaltyRange();
     }
 }
