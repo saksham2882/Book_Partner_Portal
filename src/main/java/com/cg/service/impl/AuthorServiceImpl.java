@@ -5,7 +5,7 @@ import com.cg.dto.BestSellingBookDTO;
 import com.cg.entity.Title;
 import com.cg.entity.TitleAuthor;
 import com.cg.service.IAuthorService;
-import com.cg.dto.AuthorBookPublisherDto;
+import com.cg.dto.AuthorBookPublisherDTO;
 import com.cg.repository.IAuthorRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -25,21 +25,21 @@ public class AuthorServiceImpl implements IAuthorService {
     }
 
     @Override
-    public List<AuthorBookPublisherDto> getAuthorsWithBooksAndPublishers() {
+    public List<AuthorBookPublisherDTO> getAuthorsWithBooksAndPublishers() {
         return authorRepository.findAll().stream().map(author -> {
-            AuthorBookPublisherDto dto = new AuthorBookPublisherDto();
+            AuthorBookPublisherDTO dto = new AuthorBookPublisherDTO();
             dto.setAuthorId(author.getAuId());
             dto.setAuthorFirstName(author.getFirstName());
             dto.setAuthorLastName(author.getLastName());
 
-            List<AuthorBookPublisherDto.BookPublisherDetail> books = new ArrayList<>();
+            List<AuthorBookPublisherDTO.BookPublisherDetail> books = new ArrayList<>();
             if (author.getTitleAuthors() != null) {
                 for (TitleAuthor ta : author.getTitleAuthors()) {
                     if (ta.getTitle() != null) {
                         Title title = ta.getTitle();
                         String pubId = title.getPublisher() != null ? title.getPublisher().getPubId() : null;
                         String pubName = title.getPublisher() != null ? title.getPublisher().getName() : null;
-                        books.add(new AuthorBookPublisherDto.BookPublisherDetail(
+                        books.add(new AuthorBookPublisherDTO.BookPublisherDetail(
                                 title.getTitleId(), title.getTitle(), pubId, pubName
                         ));
                     }

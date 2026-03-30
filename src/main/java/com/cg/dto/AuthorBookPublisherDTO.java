@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorBookPublisherDto {
+public class AuthorBookPublisherDTO {
     private String authorId;
     private String authorFirstName;
     private String authorLastName;

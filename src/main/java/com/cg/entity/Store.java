@@ -40,4 +40,5 @@ public class Store {
     @JsonIgnore
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Discount> discounts;
+
 }
