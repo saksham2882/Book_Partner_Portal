@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IAuthorsRepo extends JpaRepository<Authors, String> {
+public interface IAuthorRepo extends JpaRepository<Authors, String> {
 
     //queries
 }
