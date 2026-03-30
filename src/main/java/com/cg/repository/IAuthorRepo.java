@@ -16,7 +16,7 @@ public interface IAuthorRepo extends JpaRepository<Authors, String> {
     @Query("""
 SELECT new com.cg.dto.BestSellingBookDTO(
     a.auId,
-    CONCAT(a.auFname, ' ', a.auLname),
+    CONCAT(a.FirstName, ' ', a.LastName),
     t.titleId,
     t.title,
     SUM(s.qty),
@@ -26,7 +26,7 @@ FROM Authors a
 JOIN a.titleAuthors ta
 JOIN ta.title t
 JOIN t.sales s
-GROUP BY a.auId, a.auFname, a.auLname, t.titleId, t.title
+GROUP BY a.auId, a.FirstName, a.LastName, t.titleId, t.title
 ORDER BY SUM(s.qty) DESC
 """)
     List<BestSellingBookDTO> findBestSellingBooks();
@@ -35,7 +35,7 @@ ORDER BY SUM(s.qty) DESC
     @Query("""
 SELECT new com.cg.dto.AuthorRoyaltyDTO(
     a.auId,
-    CONCAT(a.auFname, ' ', a.auLname),
+    CONCAT(a.FirstName, ' ', a.LastName),
     t.titleId,
     t.title,
     MIN(r.royalty),
@@ -45,7 +45,7 @@ FROM Authors a
 JOIN a.titleAuthors ta
 JOIN ta.title t
 JOIN t.royschedList r
-GROUP BY a.auId, a.auFname, a.auLname, t.titleId, t.title
+GROUP BY a.auId, a.FirstName, a.LastName, t.titleId, t.title
 """)
     List<AuthorRoyaltyDTO> findAuthorsWithRoyaltyRange();
 }
