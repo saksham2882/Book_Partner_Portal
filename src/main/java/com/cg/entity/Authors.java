@@ -44,7 +44,7 @@ public class Authors {
     @Column(name = "contract", nullable = false)
     private String contract;
 
-    @OneToMany(MappedBy = "authors",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "authors",cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonIgnore
     private List<TitleAuthor> titleAuthors;

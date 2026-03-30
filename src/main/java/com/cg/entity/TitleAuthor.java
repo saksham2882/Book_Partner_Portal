@@ -22,7 +22,7 @@ public class TitleAuthor {
     @ManyToOne
     @MapsId("auId")   // Maps composite key field
     @JoinColumn(name = "au_id")
-    private Authors author;
+    private Authors authors;
     @ManyToOne
     @MapsId("titleId")
     @JoinColumn(name = "title_id")
