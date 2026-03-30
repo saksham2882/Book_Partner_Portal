@@ -12,5 +12,4 @@ public class BookPartnerPortalApplication {
 		// "Branch check"
 		// "Branch check - Jatin"
 	}
-
 }
