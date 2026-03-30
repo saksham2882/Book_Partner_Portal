@@ -93,4 +93,8 @@ public class Publishers {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+    public String getName() {
+        return "";
+    }
 }

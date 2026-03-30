@@ -1,5 +1,7 @@
-package com.cg.service.Impl;
+package com.cg.service.impl;
 
+import com.cg.entity.Title;
+import com.cg.entity.TitleAuthor;
 import com.cg.service.IAuthorService;
 import com.cg.dto.AuthorBookPublisherDto;
 import com.cg.repository.IAuthorRepo;
