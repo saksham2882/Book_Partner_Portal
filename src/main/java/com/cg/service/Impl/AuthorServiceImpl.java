@@ -1,6 +1,6 @@
-package com.cg.Service.Impl;
+package com.cg.service.Impl;
 
-import com.cg.Service.IAuthorService;
+import com.cg.service.IAuthorService;
 import com.cg.dto.AuthorBookPublisherDto;
 import com.cg.repository.IAuthorRepo;
 import jakarta.transaction.Transactional;

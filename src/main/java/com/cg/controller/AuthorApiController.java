@@ -1,7 +1,7 @@
-package com.cg.Controller;
+package com.cg.controller;
 
 
-import com.cg.Service.IAuthorService;
+import com.cg.service.IAuthorService;
 import com.cg.dto.AuthorBookPublisherDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

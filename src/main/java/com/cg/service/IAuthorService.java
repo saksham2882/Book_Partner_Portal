@@ -1,4 +1,4 @@
-package com.cg.Service;
+package com.cg.service;
 
 import com.cg.dto.AuthorBookPublisherDto;
 
