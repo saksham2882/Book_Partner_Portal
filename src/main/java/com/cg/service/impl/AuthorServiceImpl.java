@@ -1,5 +1,7 @@
 package com.cg.service.impl;
 
+import com.cg.dto.AuthorRoyaltyDTO;
+import com.cg.dto.BestSellingBookDTO;
 import com.cg.entity.Title;
 import com.cg.entity.TitleAuthor;
 import com.cg.service.IAuthorService;
@@ -9,7 +11,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +48,25 @@ public class AuthorServiceImpl implements IAuthorService {
             dto.setBooks(books);
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    //  API 5
+    public List<BestSellingBookDTO> getBestSellingBooks() {
+
+        List<BestSellingBookDTO> list = authorRepository.findBestSellingBooks();
+
+        Map<String, BestSellingBookDTO> map = new HashMap<>();
+
+        for (BestSellingBookDTO dto : list) {
+            map.putIfAbsent(dto.getAuthorId(), dto);
+        }
+
+        return new ArrayList<>(map.values());
+    }
+
+    //  API 6
+    public List<AuthorRoyaltyDTO> getAuthorsWithRoyaltyRange() {
+        return authorRepository.findAuthorsWithRoyaltyRange();
     }
 
 }
