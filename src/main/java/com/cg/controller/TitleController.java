@@ -32,7 +32,7 @@ public class TitleController {
 
     // API 3:
     @GetMapping("/filter")
-    public ResponseEntity<List<AuthorTitlesUnderPriceDTO>> getBooksByMaxPrice(@RequestParam(name = "maxPrice", required = true) Double maxPrice) {
+    public ResponseEntity<List<AuthorTitlesUnderPriceDTO>> getBooksByMaxPrice(@RequestParam(name = "maxPrice", required = false) Double maxPrice) {
         List<AuthorTitlesUnderPriceDTO> result = titleService.getTitlesByMaxPrice(maxPrice);
         return ResponseEntity.ok(result);
     }
