@@ -26,7 +26,7 @@ public class Sale {
     @Column(name = "payterms", length = 12, nullable = false)
     private String payTerms;
 
-    @MapsId("storId")
+    @MapsId("storeId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stor_id", nullable = false)
     private Store store;

@@ -16,13 +16,13 @@ import java.util.List;
 public class Store {
     @Id
     @Column(name = "stor_id", length = 4)
-    private String storId;
+    private String storeId;
 
     @Column(name = "stor_name", length = 40)
-    private String storName;
+    private String storeName;
 
     @Column(name = "stor_address", length = 40)
-    private String storAddress;
+    private String storeAddress;
 
     @Column(name = "city", length = 20)
     private String city;

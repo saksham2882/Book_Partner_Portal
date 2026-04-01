@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class SaleId implements Serializable {
     @Column(name = "stor_id", length = 4)
-    private String storId;
+    private String storeId;
 
     @Column(name = "ord_num", length = 20)
     private String ordNum;
@@ -28,12 +28,12 @@ public class SaleId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof SaleId)) return false;
         SaleId that = (SaleId) o;
-        return Objects.equals(storId, that.storId) &&
+        return Objects.equals(storeId, that.storeId) &&
                 Objects.equals(ordNum, that.ordNum) &&
                 Objects.equals(titleId, that.titleId);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(storId, ordNum, titleId);
+        return Objects.hash(storeId, ordNum, titleId);
     }
 }

@@ -33,9 +33,9 @@ public class StoreServiceImpl implements IStoreService {
             }
 
             return new com.cg.dto.StorePerformanceDTO(
-                    store.getStorId(),
-                    store.getStorName(),
-                    store.getStorAddress(),
+                    store.getStoreId(),
+                    store.getStoreName(),
+                    store.getStoreAddress(),
                     store.getCity(),
                     store.getState(),
                     store.getZip(),
