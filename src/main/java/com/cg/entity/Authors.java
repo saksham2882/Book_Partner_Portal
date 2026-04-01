@@ -43,7 +43,7 @@ public class Authors {
     private String zip;
 
     @Column(name = "contract", nullable = false)
-    private String contract;
+    private Integer contract;
 
     @OneToMany(mappedBy = "authors",cascade = CascadeType.ALL)
     @ToString.Exclude
