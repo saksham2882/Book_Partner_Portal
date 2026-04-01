@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "sales")
@@ -18,7 +18,7 @@ public class Sale {
     private SaleId id;
 
     @Column(name = "ord_date", nullable = false)
-    private LocalDateTime ordDate;
+    private Timestamp ordDate;
 
     @Column(name = "qty", nullable = false)
     private short qty;
