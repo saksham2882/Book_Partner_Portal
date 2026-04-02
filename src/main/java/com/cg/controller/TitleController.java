@@ -1,6 +1,7 @@
 package com.cg.controller;
 
 import com.cg.dto.AuthorTitlesUnderPriceDTO;
+import com.cg.dto.MultiAuthorTitlesDTO;
 import com.cg.dto.TitleSalesByStoreDTO;
 import com.cg.service.ITitleService;
 import org.springframework.http.ResponseEntity;
