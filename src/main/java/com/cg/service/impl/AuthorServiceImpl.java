@@ -4,6 +4,7 @@ import com.cg.dto.AuthorRoyaltyDTO;
 import com.cg.dto.BestSellingBookDTO;
 import com.cg.entity.Title;
 import com.cg.entity.TitleAuthor;
+import com.cg.exception.InvalidDataException;
 import com.cg.service.IAuthorService;
 import com.cg.dto.AuthorBookPublisherDTO;
 import com.cg.repository.IAuthorRepo;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class AuthorServiceImpl implements IAuthorService {
     private final IAuthorRepo authorRepository;
+
     public AuthorServiceImpl(IAuthorRepo authorRepository) {
         this.authorRepository = authorRepository;
     }
@@ -52,23 +54,63 @@ public class AuthorServiceImpl implements IAuthorService {
         }).collect(Collectors.toList());
     }
 
+
     //  API 5
     public List<BestSellingBookDTO> getBestSellingBooks() {
 
+//        if (true) {
+//            throw new InvalidDataException("Forced validation error");
+//        }
         List<BestSellingBookDTO> list = authorRepository.findBestSellingBooks();
 
         Map<String, BestSellingBookDTO> map = new HashMap<>();
 
         for (BestSellingBookDTO dto : list) {
+            //  VALIDATION
+            if (dto.getAuthorId() == null || dto.getTitleName() == null) {
+                throw new RuntimeException("Invalid best-selling book data");
+            }
+
+            if (dto.getTotalSales() == null || dto.getTotalSales() < 0) {
+                throw new RuntimeException("Invalid sales value");
+            }
+
+            if (dto.getRevenue() == null || dto.getRevenue() < 0) {
+                throw new RuntimeException("Invalid revenue value");
+            }
+
             map.putIfAbsent(dto.getAuthorId(), dto);
         }
+
 
         return new ArrayList<>(map.values());
     }
 
     //  API 6
     public List<AuthorRoyaltyDTO> getAuthorsWithRoyaltyRange() {
-        return authorRepository.findAuthorsWithRoyaltyRange();
-    }
 
+//        if (true) {
+//            throw new InvalidDataException("Forced validation error");
+//        }
+        List<AuthorRoyaltyDTO> list = authorRepository.findAuthorsWithRoyaltyRange();
+
+        for (AuthorRoyaltyDTO dto : list) {
+
+            //  VALIDATION
+            if (dto.getAuthorId() == null || dto.getTitleName() == null) {
+                throw new RuntimeException("Invalid royalty data");
+            }
+
+            if (dto.getMinRoyalty() == null || dto.getMaxRoyalty() == null) {
+                throw new RuntimeException("Royalty values cannot be null");
+            }
+
+            if (dto.getMinRoyalty() > dto.getMaxRoyalty()) {
+                throw new RuntimeException("Invalid royalty range");
+            }
+        }
+
+        return list;
+
+    }
 }
