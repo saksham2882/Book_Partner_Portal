@@ -3,12 +3,11 @@ package com.cg.controller;
 
 import com.cg.dto.AuthorRoyaltyDTO;
 import com.cg.dto.BestSellingBookDTO;
+import com.cg.entity.Authors;
 import com.cg.service.IAuthorService;
 import com.cg.dto.AuthorBookPublisherDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //@author Deependra
@@ -38,4 +37,5 @@ public class AuthorApiController {
     public List<AuthorRoyaltyDTO> getAuthorsWithRoyaltyRange() {
         return authorService.getAuthorsWithRoyaltyRange();
     }
+
 }

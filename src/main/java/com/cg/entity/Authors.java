@@ -46,8 +46,6 @@ public class Authors {
     private Integer contract;
 
     @OneToMany(mappedBy = "authors",cascade = CascadeType.ALL)
-    @ToString.Exclude
-    @JsonIgnore
     private List<TitleAuthor> titleAuthors;
 
 }
