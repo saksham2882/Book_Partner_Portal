@@ -1,7 +1,11 @@
 package com.cg.service.impl;
 
 import java.util.List;
-
+import com.cg.exception.BadRequestException;
+import com.cg.exception.ResourceNotFoundException;
+import java.util.Collections;
+import java.util.concurrent.Flow;
+import com.cg.entity.Publishers;
 import com.cg.dto.EmployeeWithJobDTO;
 import com.cg.dto.JobDTO;
 import com.cg.dto.TopPublisherDTO;
@@ -26,11 +30,18 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public PublisherEmployeeResponseDTO getEmployeesWithJobs(String pubId) {
+        if (pubId == null || pubId.trim().isEmpty()) {
+            throw new BadRequestException("Publisher ID cannot be null or empty");
+        }
+        if (!pubId.matches("\\d{4}")) {
+            throw new BadRequestException("Publisher ID must be 4 digits");
+        }
+        Publishers publisher = prepo.findById(pubId).orElseThrow(() -> new ResourceNotFoundException("Publisher not found with id: " + pubId));
         List<Employee> e=erepo.findEmployeesWithJobsByPublisherId(pubId);
         if (e.isEmpty()) {
             return PublisherEmployeeResponseDTO.builder().pubId(pubId)
-                    .pubName(null)
-                    .employees(List.of())
+                    .pubName(publisher.getPubName())
+                    .employees(Collections.emptyList())
                     .build();
         }
         String pubName =e.get(0).getPublisher().getPubName();
@@ -42,13 +53,13 @@ public class PublisherServiceImpl implements PublisherService {
                         .lastName(emp.getLastName())
                         .jobLevel(emp.getJobLevel())
                         .hireDate(emp.getHireDate())
-                        .job(
+                        .job(   emp.getJob() != null ?
                                 JobDTO.builder()
                                         .jobId(emp.getJob().getJobId())
                                         .jobDesc(emp.getJob().getJobDesc())
                                         .minLvl(emp.getJob().getMinLvl())
                                         .maxLvl(emp.getJob().getMaxLvl())
-                                        .build()
+                                        .build():null
                         )
                         .build()
                 )
