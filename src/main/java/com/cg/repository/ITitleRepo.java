@@ -44,4 +44,19 @@ public interface ITitleRepo extends JpaRepository<Title, String> {
            ORDER BY t.price ASC, t.title ASC, ta.auOrd ASC
       """)
   List<AuthorTitlesUnderPriceDTO> findTitlesUnderPrice(@Param("maxPrice") Double maxPrice);
+
+
+  // API 9:
+  @Query(value = """
+	    SELECT 
+	        t.title_id AS titleId, t.title AS title, t.type AS type,
+            COUNT(ta.au_id) AS authorCount,
+            GROUP_CONCAT(CONCAT(a.au_fname, ' ', a.au_lname) SEPARATOR ', ') AS authorNames
+        FROM titles t
+        JOIN titleauthor ta ON t.title_id = ta.title_id
+        JOIN authors a ON ta.au_id = a.au_id
+        GROUP BY t.title_id, t.title, t.type
+        HAVING COUNT(ta.au_id) > 1
+    """, nativeQuery = true)
+  List<Object[]> findMultiAuthorTitles();
 }
