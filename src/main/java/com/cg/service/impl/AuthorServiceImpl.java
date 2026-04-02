@@ -64,20 +64,26 @@ public class AuthorServiceImpl implements IAuthorService {
 //        }
         List<BestSellingBookDTO> list = authorRepository.findBestSellingBooks();
 
+
+        if (list == null || list.isEmpty()) {
+            throw new InvalidDataException("No best-selling books found");
+        }
         Map<String, BestSellingBookDTO> map = new HashMap<>();
 
         for (BestSellingBookDTO dto : list) {
             //  VALIDATION
             if (dto.getAuthorId() == null || dto.getTitleName() == null) {
-                throw new RuntimeException("Invalid best-selling book data");
+                throw new InvalidDataException("Invalid royalty range");
+
+
             }
 
             if (dto.getTotalSales() == null || dto.getTotalSales() < 0) {
-                throw new RuntimeException("Invalid sales value");
+                throw new InvalidDataException("Invalid sales value");
             }
 
             if (dto.getRevenue() == null || dto.getRevenue() < 0) {
-                throw new RuntimeException("Invalid revenue value");
+                throw new InvalidDataException("Invalid revenue value");
             }
 
             map.putIfAbsent(dto.getAuthorId(), dto);
@@ -99,15 +105,15 @@ public class AuthorServiceImpl implements IAuthorService {
 
             //  VALIDATION
             if (dto.getAuthorId() == null || dto.getTitleName() == null) {
-                throw new RuntimeException("Invalid royalty data");
+                throw new InvalidDataException("Invalid royalty range");
             }
 
             if (dto.getMinRoyalty() == null || dto.getMaxRoyalty() == null) {
-                throw new RuntimeException("Royalty values cannot be null");
+                throw new InvalidDataException("Invalid sales value");
             }
 
             if (dto.getMinRoyalty() > dto.getMaxRoyalty()) {
-                throw new RuntimeException("Invalid royalty range");
+                throw new InvalidDataException("Invalid revenue value");
             }
         }
 
