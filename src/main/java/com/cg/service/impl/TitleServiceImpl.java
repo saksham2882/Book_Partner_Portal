@@ -4,9 +4,11 @@ package com.cg.service.impl;
 import com.cg.dto.AuthorTitlesUnderPriceDTO;
 import com.cg.dto.MultiAuthorTitlesDTO;
 import com.cg.dto.TitleSalesByStoreDTO;
+import com.cg.exception.ResourceNotFoundException;
 import com.cg.repository.ITitleRepo;
 import com.cg.service.ITitleService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +28,10 @@ public class TitleServiceImpl implements ITitleService {
     @Override
     public List<TitleSalesByStoreDTO> getAllTitlesWithSalesByStore() {
         List<TitleSalesByStoreDTO> result = titleRepository.findAllTitlesWithSalesByStore();
+
+        if(result.isEmpty()){
+            throw new ResourceNotFoundException("No sales data found for any title.");
+        }
         return result;
     }
 
@@ -34,14 +40,15 @@ public class TitleServiceImpl implements ITitleService {
     @Override
     public List<AuthorTitlesUnderPriceDTO> getTitlesByMaxPrice(Double maxPrice) {
 
-        if(maxPrice == null){
-            throw new IllegalArgumentException("maxPrice is required.");
-        }
         if (maxPrice < 0) {
             throw new IllegalArgumentException("maxPrice cannot be negative.");
         }
 
         List<AuthorTitlesUnderPriceDTO> result = titleRepository.findTitlesUnderPrice(maxPrice);
+
+        if(result.isEmpty()){
+            throw new ResourceNotFoundException("No books found under price: " + maxPrice);
+        }
         return result;
     }
 
