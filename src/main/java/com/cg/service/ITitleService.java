@@ -11,7 +11,7 @@ public interface ITitleService {
 
     List<TitleSalesResponseDTO> getAllTitlesWithSalesByStore();
 
-    List<AuthorTitlesUnderPriceDTO> getTitlesByMaxPrice(Double maxPrice);
+    List<AuthorTitlesUnderPriceDTO> getTitlesUnderPrice(Double maxPrice);
 
     List<MultiAuthorTitlesDTO> getMultiAuthorTitles();
 }

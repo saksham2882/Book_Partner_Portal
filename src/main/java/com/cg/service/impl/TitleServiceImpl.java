@@ -63,7 +63,7 @@ public class TitleServiceImpl implements ITitleService {
 
     // API 3:
     @Override
-    public List<AuthorTitlesUnderPriceDTO> getTitlesByMaxPrice(Double maxPrice) {
+    public List<AuthorTitlesUnderPriceDTO> getTitlesUnderPrice(Double maxPrice) {
 
         if (maxPrice < 0) {
             throw new IllegalArgumentException("maxPrice cannot be negative.");
