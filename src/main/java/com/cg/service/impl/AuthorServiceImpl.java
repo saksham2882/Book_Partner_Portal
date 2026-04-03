@@ -31,7 +31,18 @@ public class AuthorServiceImpl implements IAuthorService {
 
     @Override
     public List<AuthorBookPublisherDTO> getAuthorsWithBooksAndPublishers() {
-        return authorRepository.findAll().stream().map(author -> {
+        List<com.cg.entity.Authors> authors = authorRepository.findAll();
+        if (authors == null || authors.isEmpty()) {
+            throw new com.cg.exception.ResourceNotFoundException("No authors found");
+        }
+
+        return authors.stream().map(author -> {
+            if (author.getAuId() == null) {
+                throw new com.cg.exception.BadRequestException("Author ID cannot be null");
+            }
+            if (author.getFirstName() == null || author.getLastName() == null) {
+                throw new com.cg.exception.InvalidDataException("Author name cannot be null");
+            }
             AuthorBookPublisherDTO dto = new AuthorBookPublisherDTO();
             dto.setAuthorId(author.getAuId());
             dto.setAuthorFirstName(author.getFirstName());

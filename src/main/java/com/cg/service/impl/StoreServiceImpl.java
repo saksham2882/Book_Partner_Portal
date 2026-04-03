@@ -22,7 +22,18 @@ public class StoreServiceImpl implements IStoreService {
 
     @Override
     public List<com.cg.dto.StorePerformanceDTO> getStorePerformance() {
-        return storeRepository.findAll().stream().map(store -> {
+        List<com.cg.entity.Store> stores = storeRepository.findAll();
+        if (stores == null || stores.isEmpty()) {
+            throw new com.cg.exception.ResourceNotFoundException("No stores records found");
+        }
+
+        return stores.stream().map(store -> {
+            if (store.getStoreId() == null) {
+                throw new com.cg.exception.BadRequestException("Store ID cannot be null");
+            }
+            if (store.getStoreName() == null) {
+                throw new com.cg.exception.InvalidDataException("Store name cannot be null");
+            }
 
             long totalSold = 0;
             long totalOrders = 0;

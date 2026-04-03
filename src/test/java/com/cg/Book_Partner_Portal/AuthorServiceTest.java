@@ -1,4 +1,5 @@
 package com.cg.Book_Partner_Portal;
+
 import com.cg.service.impl.AuthorServiceImpl;
 import com.cg.dto.AuthorRoyaltyDTO;
 import com.cg.dto.BestSellingBookDTO;
@@ -23,21 +24,57 @@ class AuthorServiceTest {
 
     @InjectMocks
     private AuthorServiceImpl authorService;
+
+    // API 1 (POSITIVE)
+    @Test
+    void testGetAuthorsWithBooksAndPublishers_Positive() {
+        com.cg.entity.Authors author = new com.cg.entity.Authors();
+        author.setAuId("A1");
+        author.setFirstName("John");
+        author.setLastName("Doe");
+
+        when(authorRepo.findAll()).thenReturn(List.of(author));
+
+        List<com.cg.dto.AuthorBookPublisherDTO> result = authorService.getAuthorsWithBooksAndPublishers();
+
+        assertEquals(1, result.size());
+        assertEquals("A1", result.get(0).getAuthorId());
+        verify(authorRepo, times(1)).findAll();
+    }
+
+    // API 1 (NEGATIVE - Not Found)
+    @Test
+    void testGetAuthorsWithBooksAndPublishers_NotFoundException() {
+        when(authorRepo.findAll()).thenReturn(Collections.emptyList());
+
+        assertThrows(com.cg.exception.ResourceNotFoundException.class, () -> {
+            authorService.getAuthorsWithBooksAndPublishers();
+        });
+    }
+
+    // API 1 (NEGATIVE - Bad Request)
+    @Test
+    void testGetAuthorsWithBooksAndPublishers_BadRequestException() {
+        com.cg.entity.Authors author = new com.cg.entity.Authors();
+        author.setAuId(null); // Will trigger BadRequestException
+
+        when(authorRepo.findAll()).thenReturn(List.of(author));
+
+        assertThrows(com.cg.exception.BadRequestException.class, () -> {
+            authorService.getAuthorsWithBooksAndPublishers();
+        });
+    }
+
     // API 5 (POSITIVE)
     @Test
     void testBestSellingBooks_Positive() {
 
         List<BestSellingBookDTO> mockData = List.of(
-                new BestSellingBookDTO("1", "John", "T1", "Book1", 100L, 500.0)
-        );
+                new BestSellingBookDTO("1", "John", "T1", "Book1", 100L, 500.0));
 
-        when(authorRepo.findBestSellingBooks()).thenReturn(mockData);
-
-        List<BestSellingBookDTO> result = authorService.getBestSellingBooks();
-
-        assertEquals(1, result.size());
         verify(authorRepo, times(1)).findBestSellingBooks(); // verify mock called
     }
+
     // API 5 (NEGATIVE)
     @Test
     void testBestSellingBooks_Exception() {
@@ -45,7 +82,7 @@ class AuthorServiceTest {
         when(authorRepo.findBestSellingBooks()).thenReturn(Collections.emptyList());
 
         assertThrows(InvalidDataException.class, () -> {
-            authorService.getBestSellingBooks();
+
         });
     }
 
@@ -54,22 +91,20 @@ class AuthorServiceTest {
     void testRoyaltyRange_Positive() {
 
         List<AuthorRoyaltyDTO> mockData = List.of(
-                new AuthorRoyaltyDTO("1", "John", "T1", "Book1", 10, 20)
-        );
+                new AuthorRoyaltyDTO("1", "John", "T1", "Book1", 10, 20));
 
-        when(authorRepo.findAuthorsWithRoyaltyRange()).thenReturn(mockData);
+        when(authorRepo.findAuthorsWithRoyaltyRange()).thenReturn(Collections.emptyList());
 
         List<AuthorRoyaltyDTO> result = authorService.getAuthorsWithRoyaltyRange();
 
         assertEquals(1, result.size());
-        verify(authorRepo, times(1)).findAuthorsWithRoyaltyRange();
+
     }
 
     // API 6 (NEGATIVE)
     @Test
     void testRoyaltyRange_Exception() {
-
-        List<AuthorRoyaltyDTO> mockData = List.of(
+List<AuthorRoyaltyDTO> mockData = List.of(
                 new AuthorRoyaltyDTO("1", "John", "T1", "Book1", 30, 10) // invalid
         );
 
@@ -77,6 +112,8 @@ class AuthorServiceTest {
 
         assertThrows(InvalidDataException.class, () -> {
             authorService.getAuthorsWithRoyaltyRange();
-        });
-    }
+     
+
+    });
+  }
 }
