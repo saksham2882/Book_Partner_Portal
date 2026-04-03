@@ -1,6 +1,7 @@
 package com.cg.Book_Partner_Portal;
 
 import com.cg.dto.AuthorTitlesUnderPriceDTO;
+import com.cg.dto.MultiAuthorTitlesDTO;
 import com.cg.dto.TitleSalesByStoreDTO;
 import com.cg.dto.TitleSalesResponseDTO;
 import com.cg.exception.ResourceNotFoundException;
@@ -12,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,6 +95,33 @@ public class TitleServiceTest {
 
         assertThrows(ResourceNotFoundException.class, () -> {
             titleService.getTitlesUnderPrice(10.0);
+        });
+    }
+
+
+    // API 9:
+    @Test
+    void testGetMultiAuthorTitles_Success() {
+
+        List<Object[]> mockData = new ArrayList<>();
+        mockData.add(new Object[]{"T1", "Java Basics", "Tech", 2, "Author1, Author2"});
+
+        when(titleRepository.findMultiAuthorTitles()).thenReturn(mockData);
+
+        List<MultiAuthorTitlesDTO> result = titleService.getMultiAuthorTitles();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+    }
+
+
+    // API 9:
+    @Test
+    void testGetMultiAuthorTitles_NoData() {
+        when(titleRepository.findMultiAuthorTitles()).thenReturn(new ArrayList<>());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            titleService.getMultiAuthorTitles();
         });
     }
 }
